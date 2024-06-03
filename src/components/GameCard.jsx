@@ -5,7 +5,7 @@ import { getOptimizeUrl } from "../services/optimizeImage";
 
 const GameCard = ({ game }) => {
   return (
-    <Card borderRadius="7px" overflow="hidden">
+    <Card width={"270px"} borderRadius="7px" overflow="hidden">
       <Image
         src={getOptimizeUrl(game.background_image)}
         height="75%"
