@@ -22,7 +22,7 @@ const GenreList = ({ selectedGenre, onSelectGenre }) => {
               ></Image>
               <Button
                 fontWeight={genre.slug === selectedGenre ? "bold" : "normal"}
-                fontSize="xl"
+                fontSize="lg"
                 variant="link"
                 onClick={() => onSelectGenre(genre.slug)}
               >
