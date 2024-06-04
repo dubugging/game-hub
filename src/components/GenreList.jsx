@@ -3,7 +3,7 @@ import { useGenre } from "../hooks/useGenre";
 import { getOptimizeUrl } from "../services/optimizeImage";
 import GenreSkeletonList from "./GenreSkeletonList";
 
-const GenreList = ({ onSelectGenre }) => {
+const GenreList = ({ selectedGenre, onSelectGenre }) => {
   const { genres, isLoading, error } = useGenre();
   return (
     <>
@@ -21,7 +21,8 @@ const GenreList = ({ onSelectGenre }) => {
                 src={getOptimizeUrl(genre.image_background)}
               ></Image>
               <Button
-                fontSize="lg"
+                fontWeight={genre.slug === selectedGenre ? "bold" : "normal"}
+                fontSize="xl"
                 variant="link"
                 onClick={() => onSelectGenre(genre.slug)}
               >
