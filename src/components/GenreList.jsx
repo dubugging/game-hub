@@ -1,11 +1,15 @@
 import { HStack, Image, List, ListItem, Text } from "@chakra-ui/react";
 import { useGenre } from "../hooks/useGenre";
 import { getOptimizeUrl } from "../services/optimizeImage";
+import GenreSkeletonList from "./GenreSkeletonList";
 
 const GenreList = () => {
-  const { genres } = useGenre();
+  const { genres, isLoading, error } = useGenre();
   return (
     <>
+      {error && null}
+      {isLoading && <GenreSkeletonList genres={genres}></GenreSkeletonList>}
+
       <List>
         {genres.map((genre) => (
           <ListItem key={genre.id} marginY={2}>
