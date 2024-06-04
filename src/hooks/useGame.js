@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import apiClient from "../services/apiClient";
 import { CanceledError } from "axios";
 
-export const useGame = (selectedGenre, selectedPlatform, deps) => {
+export const useGame = (selectedGenre, selectedPlatform, sortValue, deps) => {
   const [games, setGames] = useState([]);
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
@@ -15,7 +15,11 @@ export const useGame = (selectedGenre, selectedPlatform, deps) => {
       apiClient
         .get("/games", {
           signal: controller.signal,
-          params: { genres: selectedGenre, platforms: selectedPlatform },
+          params: {
+            genres: selectedGenre,
+            platforms: selectedPlatform,
+            ordering: sortValue,
+          },
         })
         .then((res) => {
           setGames(res.data.results);

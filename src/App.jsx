@@ -9,6 +9,7 @@ import SortGamesMenu from "./components/SortGamesMenu";
 function App() {
   const [selectedGenre, setSelectedGenre] = useState(null);
   const [selectedPlatform, setSelectedPlatfrom] = useState(null);
+  const [sortValue, setSortValue] = useState("");
 
   return (
     <Grid
@@ -40,10 +41,14 @@ function App() {
             selectedPlatform={selectedPlatform}
             handlePlatformSelect={(value) => setSelectedPlatfrom(value)}
           ></PlatformMenu>
-          <SortGamesMenu></SortGamesMenu>
+          <SortGamesMenu
+            handleSelectedSortValue={(value) => setSortValue(value)}
+            selectedSortValue={sortValue}
+          ></SortGamesMenu>
         </HStack>
         <GameGrid
           selectedGenre={selectedGenre}
+          sortValue={sortValue}
           selectedPlatform={
             selectedPlatform ? selectedPlatform.id : selectedPlatform
           }
