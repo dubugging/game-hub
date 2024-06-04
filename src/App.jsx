@@ -19,7 +19,7 @@ function App() {
       }}
       templateColumns={{
         base: "1fr",
-        lg: "17% 1fr",
+        lg: "225px 1fr",
       }}
     >
       <GridItem area={"nav"}>
@@ -36,7 +36,7 @@ function App() {
       </Show>
 
       <GridItem area={"main"}>
-        <HStack spacing={25} paddingLeft={20} marginBottom={5}>
+        <HStack spacing={3} marginLeft={5}>
           <PlatformMenu
             selectedPlatform={selectedPlatform}
             handlePlatformSelect={(value) => setSelectedPlatfrom(value)}

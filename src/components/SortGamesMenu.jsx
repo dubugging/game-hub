@@ -8,7 +8,7 @@ const SortGamesMenu = ({ selectedSortValue, handleSelectedSortValue }) => {
     { value: "name", label: "Name" },
     { value: "-released", label: "Release Date" },
     { value: "-metacritic", label: "Popularity" },
-    { value: "-rating", label: "Average Rating" },
+    { value: "-rating", label: "Rating" },
   ];
 
   const currentSortOrder = sortSelector.find(
