@@ -7,7 +7,7 @@ import PlatformMenu from "./components/PlatformMenu";
 
 function App() {
   const [selectedGenre, setSelectedGenre] = useState(null);
-  //const [selectedPlatform, setSelectedPlatfrom] = useState(null);
+  const [selectedPlatform, setSelectedPlatfrom] = useState(null);
 
   return (
     <Grid
@@ -17,7 +17,7 @@ function App() {
       }}
       templateColumns={{
         base: "1fr",
-        lg: "200px 1fr",
+        lg: "15% 1fr",
       }}
     >
       <GridItem area={"nav"}>
@@ -34,8 +34,16 @@ function App() {
       </Show>
 
       <GridItem area={"main"}>
-        <PlatformMenu></PlatformMenu>
-        <GameGrid selectedGenre={selectedGenre}></GameGrid>
+        <PlatformMenu
+          selectedPlatform={selectedPlatform}
+          handlePlatformSelect={(value) => setSelectedPlatfrom(value)}
+        ></PlatformMenu>
+        <GameGrid
+          selectedGenre={selectedGenre}
+          selectedPlatform={
+            selectedPlatform ? selectedPlatform.id : selectedPlatform
+          }
+        ></GameGrid>
       </GridItem>
     </Grid>
   );
