@@ -2,30 +2,36 @@ import { useEffect, useState } from "react";
 import apiClient from "../services/apiClient";
 import { CanceledError } from "axios";
 
-export const useGame = () => {
+export const useGame = (selectedGenre, deps) => {
   const [games, setGames] = useState([]);
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const controller = new AbortController();
-    setLoading(true);
+  useEffect(
+    () => {
+      const controller = new AbortController();
+      setLoading(true);
 
-    apiClient
-      .get("/games", { signal: controller.signal })
-      .then((res) => {
-        setGames(res.data.results);
-        setError("");
-        setLoading(false);
-      })
-      .catch((err) => {
-        if (err instanceof CanceledError) return;
-        setError(err.message);
-        setLoading(false);
-      });
+      apiClient
+        .get("/games", {
+          signal: controller.signal,
+          params: { genres: selectedGenre },
+        })
+        .then((res) => {
+          setGames(res.data.results);
+          setError("");
+          setLoading(false);
+        })
+        .catch((err) => {
+          if (err instanceof CanceledError) return;
+          setError(err.message);
+          setLoading(false);
+        });
 
-    return () => controller.abort();
-  }, []);
+      return () => controller.abort();
+    },
+    deps ? [...deps] : []
+  );
 
   return { games, error, isLoading };
 };

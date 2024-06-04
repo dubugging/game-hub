@@ -1,9 +1,9 @@
-import { HStack, Image, List, ListItem, Text } from "@chakra-ui/react";
+import { Button, HStack, Image, List, ListItem } from "@chakra-ui/react";
 import { useGenre } from "../hooks/useGenre";
 import { getOptimizeUrl } from "../services/optimizeImage";
 import GenreSkeletonList from "./GenreSkeletonList";
 
-const GenreList = () => {
+const GenreList = ({ onSelectGenre }) => {
   const { genres, isLoading, error } = useGenre();
   return (
     <>
@@ -20,7 +20,13 @@ const GenreList = () => {
                 borderRadius="7px"
                 src={getOptimizeUrl(genre.image_background)}
               ></Image>
-              <Text fontSize="lg">{genre.name}</Text>
+              <Button
+                fontSize="lg"
+                variant="link"
+                onClick={() => onSelectGenre(genre.slug)}
+              >
+                {genre.name}
+              </Button>
             </HStack>
           </ListItem>
         ))}
