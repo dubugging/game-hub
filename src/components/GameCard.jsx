@@ -3,6 +3,7 @@ import PlatFormIcons from "./PlatFormIcons";
 import Score from "./Score";
 import { getOptimizeUrl } from "../services/optimizeImage";
 import CardContainer from "./CardContainer";
+import Emoji from "./Emoji";
 
 const GameCard = ({ game }) => {
   return (
@@ -19,7 +20,7 @@ const GameCard = ({ game }) => {
             <Score score={game.metacritic}></Score>
           </HStack>
           <Heading fontSize="2xl" marginBottom={2}>
-            {game.name}
+            {game.name} <Emoji rating_top={game.rating_top}></Emoji>
           </Heading>
         </CardBody>
       </Card>
