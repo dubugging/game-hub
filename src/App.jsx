@@ -5,6 +5,7 @@ import GenreList from "./components/GenreList";
 import { useState } from "react";
 import PlatformMenu from "./components/PlatformMenu";
 import SortGamesMenu from "./components/SortGamesMenu";
+import GameHeading from "./components/GameHeading";
 
 function App() {
   const [selectedGenre, setSelectedGenre] = useState(null);
@@ -30,13 +31,16 @@ function App() {
       <Show above="lg">
         <GridItem area={"aside"} paddingX={5}>
           <GenreList
-            selectedGenre={selectedGenre}
             onSelectGenre={(genre) => setSelectedGenre(genre)}
           ></GenreList>
         </GridItem>
       </Show>
 
       <GridItem area={"main"}>
+        <GameHeading
+          platform={selectedPlatform}
+          genre={selectedGenre}
+        ></GameHeading>
         <HStack spacing={3} marginLeft={5}>
           <PlatformMenu
             selectedPlatform={selectedPlatform}
