@@ -14,13 +14,13 @@ const GameCard = ({ game }) => {
           objectFit={"cover"}
         ></Image>
         <CardBody>
-          <Heading fontSize="2xl" marginBottom={2}>
-            {game.name}
-          </Heading>
-          <HStack justifyContent={"space-between"}>
+          <HStack justifyContent={"space-between"} marginBottom={3}>
             <PlatFormIcons game={game}></PlatFormIcons>
             <Score score={game.metacritic}></Score>
           </HStack>
+          <Heading fontSize="2xl" marginBottom={2}>
+            {game.name}
+          </Heading>
         </CardBody>
       </Card>
     </CardContainer>
