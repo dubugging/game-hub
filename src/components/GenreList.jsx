@@ -8,14 +8,11 @@ import {
 } from "@chakra-ui/react";
 import { useGenre } from "../hooks/useGenre";
 import { getOptimizeUrl } from "../services/optimizeImage";
-import GenreSkeletonList from "./GenreSkeletonList";
 
 const GenreList = ({ selectedGenre, onSelectGenre }) => {
-  const { genres, isLoading, error } = useGenre();
+  const { genres } = useGenre();
   return (
     <>
-      {error && null}
-      {isLoading && <GenreSkeletonList genres={genres}></GenreSkeletonList>}
       <Heading fontSize="2xl" as="h1" marginBottom={3}>
         Genres
       </Heading>
