@@ -53,6 +53,7 @@ function App() {
           selectedPlatform={
             selectedPlatform ? selectedPlatform.id : selectedPlatform
           }
+          searchText={searchText}
         ></GameGrid>
       </GridItem>
     </Grid>
