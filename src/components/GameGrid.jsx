@@ -30,7 +30,7 @@ const GameGrid = ({
         skeletons.map((skeleton) => (
           <CardSkeleton key={skeleton}></CardSkeleton>
         ))}
-      {games.map((game) => (
+      {games && games.map((game) => (
         <GameCard game={game} key={game}></GameCard>
       ))}
     </SimpleGrid>

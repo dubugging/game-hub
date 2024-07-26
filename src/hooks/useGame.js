@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
 import apiClient from "../services/apiClient";
-import { CanceledError } from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 export const useGame = (
   selectedGenre,
@@ -9,40 +8,16 @@ export const useGame = (
   searchText,
   deps
 ) => {
-  const [games, setGames] = useState([]);
-  const [error, setError] = useState("");
-  const [isLoading, setLoading] = useState(false);
-
-  useEffect(
-    () => {
-      const controller = new AbortController();
-      setLoading(true);
-
-      apiClient
-        .get("/games", {
-          signal: controller.signal,
-          params: {
-            genres: selectedGenre,
+  const {data: games, error, isLoading} = useQuery({
+    queryKey: ['games', deps],
+    queryFn: () => apiClient.get('/games', {
+      params: {
+        genres: selectedGenre,
             platforms: selectedPlatform,
             ordering: sortValue,
             search: searchText,
-          },
-        })
-        .then((res) => {
-          setGames(res.data.results);
-          setError("");
-          setLoading(false);
-        })
-        .catch((err) => {
-          if (err instanceof CanceledError) return;
-          setError(err.message);
-          setLoading(false);
-        });
-
-      return () => controller.abort();
-    },
-    deps ? [...deps] : []
-  );
-
+      }
+    }).then(res => res.data.results)
+  })
   return { games, error, isLoading };
 };
