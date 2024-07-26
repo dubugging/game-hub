@@ -1,7 +1,8 @@
 import { useGame } from "../hooks/useGame";
-import { Text, SimpleGrid, Button, Box } from "@chakra-ui/react";
+import { Text, SimpleGrid, Spinner } from "@chakra-ui/react";
 import GameCard from "./GameCard";
 import CardSkeleton from "./CardSkeleton";
+import InfiniteScroll from "react-infinite-scroll-component";
 import React from "react";
 
 const GameGrid = ({
@@ -10,7 +11,7 @@ const GameGrid = ({
   sortValue,
   searchText,
 }) => {
-  const { games, error, isLoading, fetchNextPage,isFetchingNextPage, hasNextPage } = useGame(
+  const { games, error, isLoading, fetchNextPage, hasNextPage } = useGame(
     selectedGenre,
     selectedPlatform,
     sortValue,
@@ -21,28 +22,37 @@ const GameGrid = ({
 
   if (error) return <Text>{error}</Text>;
 
+  const fetchedGamesCount = games
+    ? games.pages.reduce((total, page) => total + page.results.length, 0)
+    : 0;
+
   return (
-    <Box spacing={3}>
-    <SimpleGrid
-      columns={{ sm: 1, md: 2, lg: 3, xl: 4, "2xl": 5 }}
-      spacing={3}
-      padding={5}
+    <InfiniteScroll
+      dataLength={fetchedGamesCount}
+      hasMore={hasNextPage}
+      next={() => fetchNextPage()}
+      loader={<Spinner ml={5} />}
     >
-      {isLoading &&
-        skeletons.map((skeleton) => (
-          <CardSkeleton key={skeleton}></CardSkeleton>
-        ))}
-        {games && games.pages.map((page, index) => <React.Fragment key={index}>
-          {page.results.map((game) => (
-        <GameCard game={game} key={game.id}></GameCard>
-      ))}
-        </React.Fragment>)}
-    </SimpleGrid>
-      {hasNextPage && <Button margin={5} onClick={() => fetchNextPage()}>{isFetchingNextPage ? 'Loading...': 'Load More'}</Button>}
-    </Box>
-    
+      <SimpleGrid
+        columns={{ sm: 1, md: 2, lg: 3, xl: 4, "2xl": 5 }}
+        spacing={3}
+        padding={5}
+      >
+        {isLoading &&
+          skeletons.map((skeleton) => (
+            <CardSkeleton key={skeleton}></CardSkeleton>
+          ))}
+        {games &&
+          games.pages.map((page, index) => (
+            <React.Fragment key={index}>
+              {page.results.map((game) => (
+                <GameCard game={game} key={game.id}></GameCard>
+              ))}
+            </React.Fragment>
+          ))}
+      </SimpleGrid>
+    </InfiniteScroll>
   );
 };
 
 export default GameGrid;
- 
