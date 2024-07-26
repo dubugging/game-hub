@@ -1,28 +1,14 @@
-import { useEffect, useState } from "react";
 import apiClient from "../services/apiClient";
-import { CanceledError } from "axios";
+import { useQuery } from "@tanstack/react-query";
+import storedPlatform from "../data/storedPlatform";
 
 export const usePlatform = () => {
-  const [platforms, setPlatforms] = useState([]);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    apiClient
-      .get("/platforms/lists/parents", {
-        signal: controller.signal,
-      })
-      .then((res) => {
-        setPlatforms(res.data.results);
-      })
-      .catch((err) => {
-        if (err instanceof CanceledError) return;
-        setError(err.message);
-      });
-
-    return () => controller.abort();
-  }, []);
+  const {data: platforms, error} = useQuery({
+    queryKey: ['platforms'],
+    queryFn: () => apiClient.get('https://api.rawg.io/api/platforms/lists/parents').then(res => res.data.results),
+    staleTime: 24*60*60*1000,
+    initialData: storedPlatform
+  })
 
   return { platforms, error };
 };
