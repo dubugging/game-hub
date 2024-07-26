@@ -38,7 +38,7 @@ const GameGrid = ({
       ))}
         </React.Fragment>)}
     </SimpleGrid>
-      {hasNextPage && <Button marginLeft={5} onClick={() => fetchNextPage()}>{isFetchingNextPage ? 'Loading...': 'Load More'}</Button>}
+      {hasNextPage && <Button margin={5} onClick={() => fetchNextPage()}>{isFetchingNextPage ? 'Loading...': 'Load More'}</Button>}
     </Box>
     
   );
