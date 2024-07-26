@@ -5,12 +5,15 @@ import {
   Image,
   List,
   ListItem,
+  Text,
 } from "@chakra-ui/react";
 import { useGenre } from "../hooks/useGenre";
 import { getOptimizeUrl } from "../services/optimizeImage";
 
 const GenreList = ({ selectedGenre, onSelectGenre }) => {
-  const { genres } = useGenre();
+  const { genres, isLoading, error } = useGenre();
+  if (error) return <Text>{error}</Text>
+  if (isLoading) return <Text>Loading...</Text>
   return (
     <>
       <Heading fontSize="2xl" as="h1" marginBottom={3}>
